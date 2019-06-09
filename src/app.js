@@ -19,11 +19,17 @@ const router = express.Router();
 
 // Carrega os Models
 const Medicao = require('./models/medicao');
+const Controlador = require('./models/controlador');
+const Plantio = require('./models/plantio')
+const Sensor = require('./models/sensor')
 
 // Carrega as Rotas
 
 const indexRoute = require('./routes/index-route');
 const medicaoRoute = require('./routes/medicao-route');
+const controladorRoute = require('./routes/controlador-route');
+const plantioRoute = require('./routes/plantio-route');
+const sensorRoute = require('./routes/sensor-route');
 
 app.use(bodyParser.json({
     limit: '5mb'
@@ -45,5 +51,8 @@ console.log('teste');
 
 app.use('/', indexRoute);
 app.use('/medicao', medicaoRoute);
+app.use('/controlador', controladorRoute);
+app.use('/plantio', plantioRoute);
+app.use('/sensor', sensorRoute);
 
 module.exports = app;

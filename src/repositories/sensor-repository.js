@@ -4,13 +4,23 @@ const Sensor = mongoose.model('sensor');
 
 exports.get = async() => {
     const res = await Sensor.find({}, 
-        'cultura codigo tipo posicao medicao limiar');
+        'cultura codigo tipo posicao medicao limiar macControlador');
     return res;
 }
 
 exports.create = async(data) => {
     var sensor = new Sensor(data);
     const res = await sensor.save();
+    return res;
+}
+
+exports.getByMacCodigo = async(codigo,tipo,macControlador) => {
+    const res = await Sensor
+        .findOne({
+            codigo: codigo,
+            tipo: tipo,
+            macControlador: macControlador
+        }, 'cultura codigo tipo posicao medicao limiar macControlador');
     return res;
 }
 

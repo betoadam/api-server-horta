@@ -8,6 +8,22 @@ exports.get = async() => {
     return res;
 }
 
+exports.getByMac = async(mac) => {
+    const res = await Controlador
+        .findOne({
+            mac: mac
+        }, 'mac descricao sensores');
+    return res;
+}
+
+exports.getByMacSensores = async(mac) => {
+    const res = await Controlador
+        .findOne({
+            mac: mac
+        }, 'mac descricao sensores');
+    return res;
+}
+
 exports.create = async(data) => {
     var controlador = new Controlador(data);
     const res = await controlador.save();

@@ -2,22 +2,45 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var schema = new Schema({
-  cultura:  String, //front-end informa a cultura do sensor
-  codigo: Number, //não alterado
-  tipo: String, // Umidade, Temperatura, Luminosidade, etc
-  posicao: {
-    x: String,
-    y: String,
-    z: String
+  cultura: {//front-end informa a cultura do sensor
+    type: String,
+    required: false
   },
-  medicao: [{
-    valor: Number, //temperatura, 
-    data:  Date
-  }],
+  codigo: {//front-end informa a cultura do sensor
+    type: Number,
+    required: true
+  },
+  macControlador: {//front-end informa a cultura do sensor
+    type: String,
+    required: true
+  },
+  tipo: {// Umidade, Temperatura, Luminosidade, etc
+    type: String,
+    required: true
+  },
+  posicao: {
+    lat: {
+      type: String,
+      required: false
+    },
+    long: {
+      type: String,
+      required: false
+    }
+  },
   limiar: {
-    valorMinimo: Number,
-    valorMaximo: Number,
-    tempo: Number //segundos
+    valorMinimo: {
+      type: Number,
+      required: false
+    },
+    valorMaximo: {
+      type: Number,
+      required: false
+    },
+    tempo: {
+      type: Number,
+      required: false
+    }
   }
 });
 

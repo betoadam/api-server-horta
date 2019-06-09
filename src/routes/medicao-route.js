@@ -6,7 +6,7 @@ const controller = require('../controllers/medicao-controller');
 const authService = require('../services/auth-service');
 
 router.get('/', controller.get);
-router.post('/', controller.post);
+router.post('/sincronizar', controller.sincronizar);
 /*router.put('/:id', controller.put);*/
 router.delete('/', controller.delete);
 

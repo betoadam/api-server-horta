@@ -2,14 +2,24 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var schema = new Schema({
-  mac: String,
-  descricao:  String,
+  mac: {
+    type: String, //temperatura, pressão, umidade 
+    required: true
+  },
+  descricao: {
+    type: String, //temperatura, pressão, umidade 
+    required: true
+  },
   sensores:[{
-    _id: {
+    sensor: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'sensor',
-      required: true
-    },    
+      required: false
+    },
+    codigo: {
+      type: String, //temperatura, pressão, umidade 
+      required: false
+    }
   }],
 });
 

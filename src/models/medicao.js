@@ -5,18 +5,14 @@ const Schema = mongoose.Schema;
 
 var schema = new Schema({
   controlador:{
-    _id: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'controlador',
-      required: true
-    },    
+      required: true  
   },
   sensor:{
-    _id: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'sensor',
       required: true
-    }
   },
   medicao: [{
     tipo: {

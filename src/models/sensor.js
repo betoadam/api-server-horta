@@ -14,11 +14,11 @@ var schema = new Schema({
     valor: Number, //temperatura, 
     data:  Date
   }],
-  limiar: [{
+  limiar: {
     valorMinimo: Number,
     valorMaximo: Number,
     tempo: Number //segundos
-  }]
+  }
 });
 
 

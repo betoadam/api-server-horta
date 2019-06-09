@@ -3,34 +3,35 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const schema = new Schema({
-  codigoSensor: {
-    type: String,
-    required: true
+var schema = new Schema({
+  controlador:{
+    _id: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'controlador',
+      required: true
+    },    
   },
-  mac: {
-    type: String,
-    required: true,
-  },
-  tipo: {
-    type: String,
-    required: true
+  sensor:{
+    _id: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'sensor',
+      required: true
+    }
   },
   medicao: [{
     tipo: {
-      type: String,
+      type: String, //temperatura, pressão, umidade 
       required: true
-    },
+    }, 
     valor: {
       type: Number,
       required: true
-    }
+    } 
   }],
   data: {
     type: Date,
-    required:false
+    required: true
   }
-
 });
 
 module.exports = mongoose.model('medicao', schema);

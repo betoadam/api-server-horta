@@ -4,7 +4,7 @@ const Medicao = mongoose.model('medicao');
 
 exports.get = async() => {
     const res = await Medicao.find({}, 
-        'codigoSensor controlador tipo medicao data');
+        'controlador sensor medicao data');
     return res;
 }
 

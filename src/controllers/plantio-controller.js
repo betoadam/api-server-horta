@@ -1,22 +1,13 @@
 'use strict';
 
 const mongoose = require('mongoose');
-//const Produto = mongoose.model('sensor');
-
-let plantio = {
-  area: 30,
-  controladores:['503049asdeead33334ad'],
-  produtividade: {
-    pesoBruto: 50, //kg
-    pesoLiquido: 45 //kg
-  }
-}
+const Plantio = mongoose.model('plantio');
+const repository = require('../repositories/plantio-repository');
 
 exports.get = async (req, res, next) => {
   try {
-    res.status(200).send({
-      plantio
-    })
+    var lista = await repository.get()
+    res.status(200).send(lista)
     
   } catch (error) {
     res.status(500).send({

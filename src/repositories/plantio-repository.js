@@ -3,8 +3,9 @@ const mongoose = require('mongoose');
 const Plantio = mongoose.model('plantio');
 
 exports.get = async() => {
-    const res = await Plantio.find({}, 
-        'area controladores produtividade');
+    const res = await Plantio
+        .find({},'area controladores produtividade')
+        .populate('controlador');
     return res;
 }
 
@@ -20,9 +21,9 @@ exports.update = async(data) => {
             _id: data._id
         }, {
             $set: {
-                mac: data.mac,
-                descricao: data.descricao,
-                sensores: data.sensores
+                area: data.area,
+                controladores: data.controladores,
+                produtividade: data.produtividade
             }
         }, {upsert: true, new: true}, function(err, res){
 

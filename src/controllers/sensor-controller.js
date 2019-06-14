@@ -1,24 +1,13 @@
 'use strict';
 
 const mongoose = require('mongoose');
-//const Produto = mongoose.model('sensor');
-
-let sensor = {
-  cultura: 'alface',
-  codigo: '', //não alterado
-  tipo: 'BME380', //BME380 / 20 AWG
-  coordenada: {
-    lt: 51.000,
-    lg: -15.000
-  }
-}
+const Sensor = mongoose.model('sensor');
+const repository = require('../repositories/sensor-repository');
 
 exports.get = async (req, res, next) => {
   try {
-    res.status(200).send({
-      sensor
-    })
-    
+    var lista = await repository.get()
+    res.status(200).send(lista)
   } catch (error) {
     res.status(500).send({
       message: 'Falha ao processar requisição',

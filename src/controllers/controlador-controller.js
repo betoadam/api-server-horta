@@ -1,20 +1,14 @@
 'use strict';
 
 const mongoose = require('mongoose');
-//const Produto = mongoose.model('sensor');
+const Controlador = mongoose.model('controlador');
+const repository = require('../repositories/controlador-repository');
 
-let controlador = {
-  mac: 'mac',
-  descricao: 'descricao',
-  sensores: ['idsensor1', 'idsensor2']
-}
 
 exports.get = async (req, res, next) => {
   try {
-    res.status(200).send({
-      controlador
-    })
-
+    var lista = await repository.get()
+    res.status(200).send(lista)
   } catch (error) {
     res.status(500).send({
       message: 'Falha ao processar requisição',

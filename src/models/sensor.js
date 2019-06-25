@@ -2,9 +2,10 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var schema = new Schema({
-  cultura: {//front-end informa a cultura do sensor
-    type: String,
-    required: false
+  plantioSensor:{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'plantioSensor',
+    required: true
   },
   codigo: {//front-end informa a cultura do sensor
     type: Number,

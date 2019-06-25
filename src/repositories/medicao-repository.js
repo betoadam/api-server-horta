@@ -8,6 +8,12 @@ exports.get = async() => {
     return res;
 }
 
+exports.getByControlador = async(id) => {
+    const res = await Medicao.find({controlador:id}, 
+        'controlador sensor medicao data');
+    return res;
+}
+
 exports.create = async(data) => {
     var medicao = new Medicao(data);
     const res = await medicao.save();

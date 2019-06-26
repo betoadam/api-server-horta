@@ -9,11 +9,6 @@ var schema = new Schema({
       ref: 'controlador',
       required: true  
   },
-  sensor:{
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'sensor',
-      required: true
-  },
   medicao: [{
     tipo: {
       type: String, //temperatura, pressão, umidade 
@@ -21,6 +16,11 @@ var schema = new Schema({
     }, 
     valor: {
       type: Number,
+      required: true
+    },
+    sensor:{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'sensor',
       required: true
     } 
   }],

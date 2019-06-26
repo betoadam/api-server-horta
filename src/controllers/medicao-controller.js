@@ -22,9 +22,8 @@ exports.sincronizar = async (req, res, next) => {
         let item = req.body
         let medicao = {
             controlador: '',
-            sensor: '',
             medicao: item.medicao,
-            data: item.data
+            data: new Date()
         }
         let controlador = await repository_controlador.getByMac(item.mac)
         if (!controlador) {
@@ -35,39 +34,43 @@ exports.sincronizar = async (req, res, next) => {
             controlador = await repository_controlador.create(unic_controlador)
         }
         medicao.controlador = controlador.id
-        let sensor = await repository_sensor.getByMacCodigo(Number(item.codigoSensor), item.tipo, item.mac)
-        if (!sensor) {
-            let unic_sensor = {
-                macControlador: item.mac,
-                codigo: Number(item.codigoSensor),
-                tipo: item.tipo
+        for (let i in item.medicao) {
+            let sensor = await repository_sensor.getByMacCodigo(Number(item.medicao[i].codigoSensor), item.medicao[i].tipo, item.mac)
+            if (!sensor) {
+                let unic_sensor = {
+                    macControlador: item.mac,
+                    codigo: Number(item.medicao[i].codigoSensor),
+                    tipo: item.medicao[i].tipo
+                }
+                sensor = await repository_sensor.create(unic_sensor)
             }
-            sensor = await repository_sensor.create(unic_sensor)
-        }
-        medicao.sensor = sensor.id
-        let mycontroler = await repository_controlador.getByMacSensores(item.mac)
-        let listaSensores = mycontroler.sensores
-        if (listaSensores.length < 1) {
-            controlador.sensores.push({ sensores: {sensor:sensor.id,codigo: 'Qualquer'} })
-            controlador.sensores[0].sensor = sensor.id
-            controlador.sensores[0].codigo = sensor.id
-            let sucesso = await repository_controlador.update(controlador)
-        } else {
-            let adiciona = false
-            for (let i in listaSensores) {
-                if (sensor.id == listaSensores[i].sensor)
-                    adiciona = true
-            }
-            if (!adiciona){
-                
-                controlador.sensores.push({ sensores: {sensor:sensor.id,codigo: 'Qualquer'} })
-                controlador.sensores[controlador.sensores.length-1].sensor = sensor.id
-                controlador.sensores[controlador.sensores.length-1].codigo = sensor.id
-                let vai = await repository_controlador.update(controlador)
-            }
-                
+            medicao.medicao[i].sensor = sensor.id
         }
 
+
+        //let mycontroler = await repository_controlador.getByMacSensores(item.mac)
+        let listaSensores = medicao.medicao
+        for (let i in item.medicao) {
+            if (listaSensores.length < 1) {
+                controlador.sensores.push({ sensores: { sensor: medicao.medicao[i].sensor, codigo: Number(item.medicao[i].codigoSensor) } })
+                controlador.sensores[0].sensor = medicao.medicao[i].sensor
+                controlador.sensores[0].codigo = Number(item.medicao[i].codigoSensor)
+                let sucesso = await repository_controlador.update(controlador)
+            } else {
+                let adiciona = false
+                for (let i in listaSensores) {
+                    if (medicao.medicao[i].sensor == listaSensores[i].sensor)
+                        adiciona = true
+                }
+                if (!adiciona) {
+
+                    controlador.sensores.push({ sensores: { sensor: medicao.medicao[i].sensor, codigo: Number(item.medicao[i].codigoSensor) } })
+                    controlador.sensores[controlador.sensores.length - 1].sensor = medicao.medicao[i].sensor
+                    controlador.sensores[controlador.sensores.length - 1].codigo = Number(item.medicao[i].codigoSensor)
+                    let vai = await repository_controlador.update(controlador)
+                }
+            }
+        }
         retorno = await repository.create(medicao)
         res.status(201).send({
             message: 'Sucesso',

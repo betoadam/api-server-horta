@@ -3,6 +3,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+mongoose.Promise = global.Promise;
 const config = require('./config');
 
 const app = express();
@@ -10,7 +11,7 @@ const router = express.Router();
 
 // Connecta ao banco
     mongoose
-      .connect(config.connectionString, { useNewUrlParser: true, useMongoClient: true })
+      .connect(config.connectionString, { useMongoClient: true })
       .then(() => console.log("mongoDB connected"))
       .catch(err => console.log(err));
   

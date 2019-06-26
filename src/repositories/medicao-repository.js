@@ -10,7 +10,7 @@ exports.get = async() => {
 
 exports.getByControlador = async(id) => {
     const res = await Medicao.find({controlador:id}, 
-        'controlador sensor medicao data');
+        'controlador medicao data');
     return res;
 }
 

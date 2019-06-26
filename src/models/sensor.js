@@ -5,7 +5,7 @@ var schema = new Schema({
   plantioSensor:{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'plantioSensor',
-    required: true
+    required: false
   },
   codigo: {//front-end informa a cultura do sensor
     type: Number,

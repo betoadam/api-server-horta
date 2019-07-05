@@ -46,25 +46,30 @@ exports.sincronizar = async (req, res, next) => {
             }
             medicao.medicao[i].sensor = sensor.id
         }
+        let controladoress = await repository_controlador.getByMacSensores(item.mac) 
+        let listaSensores = controladoress.sensores
 
-
-        //let mycontroler = await repository_controlador.getByMacSensores(item.mac)
-        let listaSensores = medicao.medicao
         for (let i in item.medicao) {
-            if (listaSensores.length < 1) {
+            let mycontroler = await repository_controlador.getByMacSensores(item.mac)
+            let sensor = item.medicao[i].sensor
+            let tam_sensores = mycontroler.sensores.length
+            if(!tam_sensores){
+                tam_sensores = 0
+            }
+            if (tam_sensores < 1) {
                 controlador.sensores.push({ sensores: { sensor: medicao.medicao[i].sensor, codigo: Number(item.medicao[i].codigoSensor) } })
-                controlador.sensores[0].sensor = medicao.medicao[i].sensor
+                controlador.sensores[0].sensor = sensor
                 controlador.sensores[0].codigo = Number(item.medicao[i].codigoSensor)
                 let sucesso = await repository_controlador.update(controlador)
             } else {
-                let adiciona = false
-                for (let i in listaSensores) {
-                    if (medicao.medicao[i].sensor == listaSensores[i].sensor)
-                        adiciona = true
+                let adiciona = true
+                for (let f in listaSensores) {
+                    if (sensor == listaSensores[f].sensor){
+                        adiciona = false
+                    }
                 }
-                if (!adiciona) {
-
-                    controlador.sensores.push({ sensores: { sensor: medicao.medicao[i].sensor, codigo: Number(item.medicao[i].codigoSensor) } })
+                if (adiciona) {
+                    controlador.sensores.push({ sensores: { sensor: sensor, codigo: Number(item.medicao[i].codigoSensor) } })
                     controlador.sensores[controlador.sensores.length - 1].sensor = medicao.medicao[i].sensor
                     controlador.sensores[controlador.sensores.length - 1].codigo = Number(item.medicao[i].codigoSensor)
                     let vai = await repository_controlador.update(controlador)

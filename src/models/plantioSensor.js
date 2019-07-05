@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var schema = new Schema({
-  cultura: Number, // m2
+  cultura: String, //
   produtividade: {
     pesoBruto: Number, //kg
     pesoLiquido: Number //kg

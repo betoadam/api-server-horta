@@ -17,5 +17,6 @@ Após estar com o projeto em seu computador execute *npm install*
 -----------------------------------------------------
 Para executar o projeto basta rodar no terminal o *npm start*
 -----------------------------------------------------
+baseado no :https://www.youtube.com/watch?v=wDWdqlYxfcw
 
 # node_backend
